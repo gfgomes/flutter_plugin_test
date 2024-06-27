@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   image_picker: ^1.1.2
   cross_file_image: ^1.1.0
+  full_screen_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:

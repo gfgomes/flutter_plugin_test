@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageGalleryWidget extends StatefulWidget {
@@ -58,19 +59,22 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
                                     width: 130,
                                     height: 130,
                                     color: Colors.red,
-                                    child: Image(
-                                      image: XFileImage(e),
-                                      fit: BoxFit.fill,
+                                    child: FullScreenWidget(
+                                      disposeLevel: DisposeLevel.High,
+                                      child: Image(
+                                        image: XFileImage(e),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 IconButton(
                                   onPressed: () {
                                     imageFileList!.remove(e);
-                                    EnableCamButton();
+                                    enableCamButton();
                                     setState(() {});
                                   },
-                                  icon: Icon(Icons.delete,
+                                  icon: const Icon(Icons.delete,
                                       color: Colors.red, size: 38),
                                 )
                               ],
@@ -95,7 +99,7 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
 
       if (image != null) {
         imageFileList!.add(image!);
-        EnableCamButton();
+        enableCamButton();
         setState(() {});
       }
     }
@@ -106,7 +110,7 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
     //List<XFile>? images = await picker.pickMultiImage();
   }
 
-  EnableCamButton() {
+  enableCamButton() {
     if (imageFileList != null && imageFileList!.length < maxImages) {
       enableCamera = true;
     } else {
