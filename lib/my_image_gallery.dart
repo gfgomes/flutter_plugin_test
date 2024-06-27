@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
@@ -35,35 +32,45 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
           children: [
             ElevatedButton.icon(
               onPressed: enableCamera ? getImage : null,
-              icon: Icon(Icons.add_a_photo),
-              label: Text('Adcionar imagem'),
+              icon: const Icon(Icons.add_a_photo),
+              label: const Text('Adcionar imagem'),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
+            if (imageFileList != null && imageFileList!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: SizedBox(
+                    height: 20,
+                    child: Text(
+                        'Selecionadas: ${imageFileList!.length} de $maxImages'),
+                  ),
+                ),
+              ),
+            SizedBox(
               height: 200,
               child: (imageFileList != null && imageFileList!.isNotEmpty)
                   ? ListView(
-                      // This next line does the trick.
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         for (var e in imageFileList!)
                           Center(
                             child: Column(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 130,
-                                    height: 130,
-                                    color: Colors.red,
-                                    child: FullScreenWidget(
-                                      disposeLevel: DisposeLevel.High,
-                                      child: Image(
-                                        image: XFileImage(e),
-                                        fit: BoxFit.fill,
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      //width: 130,
+                                      height: 130,
+                                      child: FullScreenWidget(
+                                        disposeLevel: DisposeLevel.High,
+                                        child: Center(
+                                          child: Image(
+                                            image: XFileImage(e),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
