@@ -20,6 +20,10 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
 
   XFile? image = null;
 
+  bool enableCamera = true;
+
+  int maxImages = 5;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +32,10 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
         ),
         body: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                getImage();
-              },
-              child: Text('Clique aqui'),
+            ElevatedButton.icon(
+              onPressed: enableCamera ? getImage : null,
+              icon: Icon(Icons.add_a_photo),
+              label: Text('Adcionar imagem'),
             ),
             const SizedBox(
               height: 20,
@@ -40,12 +43,12 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 20),
               height: 200,
-              child: imageFileList!.isNotEmpty
+              child: (imageFileList != null && imageFileList!.isNotEmpty)
                   ? ListView(
                       // This next line does the trick.
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        if (image != null)
+                        for (var e in imageFileList!)
                           Center(
                             child: Column(
                               children: [
@@ -56,77 +59,23 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
                                     height: 130,
                                     color: Colors.red,
                                     child: Image(
-                                      image: XFileImage(image!),
+                                      image: XFileImage(e),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    imageFileList!.remove(e);
+                                    EnableCamButton();
+                                    setState(() {});
+                                  },
                                   icon: Icon(Icons.delete,
                                       color: Colors.red, size: 38),
                                 )
                               ],
                             ),
-                          ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 130,
-                                  height: 130,
-                                  color: Colors.green,
-                                  //child: Image.memory(bytes, fit: BoxFit.fill,),
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.delete,
-                                    color: Colors.red, size: 38),
-                              )
-                            ],
-                          ),
-                        ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 130,
-                                  height: 130,
-                                  color: Colors.yellow,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.delete,
-                                    color: Colors.red, size: 38),
-                              )
-                            ],
-                          ),
-                        ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 130,
-                                  height: 130,
-                                  color: Colors.purple,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.delete,
-                                    color: Colors.red, size: 38),
-                              )
-                            ],
-                          ),
-                        ),
+                          )
                       ],
                     )
                   : Container(),
@@ -136,20 +85,33 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
   }
 
   void getImage() async {
-    image = await picker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 100,
-      maxHeight: 1000,
-      maxWidth: 1000,
-    );
+    if (imageFileList != null && imageFileList!.length < maxImages) {
+      image = await picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 100,
+        maxHeight: 1000,
+        maxWidth: 1000,
+      );
 
-    if (image != null) {
-      setState(() {});
+      if (image != null) {
+        imageFileList!.add(image!);
+        EnableCamButton();
+        setState(() {});
+      }
     }
 
     print(image.toString());
-    imageFileList!.add(image!);
+
     print(imageFileList!.length.toString());
     //List<XFile>? images = await picker.pickMultiImage();
+  }
+
+  EnableCamButton() {
+    if (imageFileList != null && imageFileList!.length < maxImages) {
+      enableCamera = true;
+    } else {
+      enableCamera = false;
+    }
+    setState(() {});
   }
 }
