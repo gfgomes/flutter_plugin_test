@@ -50,44 +50,43 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
             SizedBox(
               height: 200,
               child: (imageFileList != null && imageFileList!.isNotEmpty)
-                  ? ListView(
+                  ? ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        for (var e in imageFileList!)
-                          Center(
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      //width: 130,
-                                      height: 130,
-                                      child: FullScreenWidget(
-                                        disposeLevel: DisposeLevel.High,
-                                        child: Center(
-                                          child: Image(
-                                            image: XFileImage(e),
-                                            fit: BoxFit.cover,
-                                          ),
+                      itemCount: imageFileList!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    //width: 130,
+                                    height: 130,
+                                    child: FullScreenWidget(
+                                      disposeLevel: DisposeLevel.High,
+                                      child: Center(
+                                        child: Image(
+                                          image:
+                                              XFileImage(imageFileList![index]),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    imageFileList!.remove(e);
-                                    enableCamButton();
-                                    setState(() {});
-                                  },
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red, size: 38),
-                                )
-                              ],
-                            ),
-                          )
-                      ],
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  removeImage(imageFileList![index]);
+                                },
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.red, size: 38),
+                              )
+                            ],
+                          ),
+                        );
+                      },
                     )
                   : Container(),
             ),
@@ -105,16 +104,9 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
       );
 
       if (image != null) {
-        imageFileList!.add(image!);
-        enableCamButton();
-        setState(() {});
+        addImage(image!);
       }
     }
-
-    print(image.toString());
-
-    print(imageFileList!.length.toString());
-    //List<XFile>? images = await picker.pickMultiImage();
   }
 
   enableCamButton() {
@@ -123,6 +115,17 @@ class _ImageGalleryWidgetState extends State<ImageGalleryWidget> {
     } else {
       enableCamera = false;
     }
+  }
+
+  void addImage(XFile xFile) {
+    imageFileList!.add(xFile);
+    enableCamButton();
+    setState(() {});
+  }
+
+  void removeImage(XFile xFile) {
+    imageFileList!.remove(xFile);
+    enableCamButton();
     setState(() {});
   }
 }
