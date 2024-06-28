@@ -35,28 +35,28 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
     );
   }
 
-  /// Adds an image to the `imageFileList`.
+  /// Adiciona uma imagem à lista `imageFileList`.
   ///
-  /// The `image` parameter is the `XFile` object representing the image to be added.
+  /// O parâmetro `image` é o objeto `XFile` representando a imagem a ser adicionada.
   ///
-  /// This function updates the state by adding the `image` to the `imageFileList`.
+  /// Esta função atualiza o estado adicionando a `image` à `imageFileList`.
   ///
-  /// Returns a `Future<void>` indicating the completion of the operation.
+  /// Retorna um `Future<void>` indicando a conclusão da operação.
   Future<void> addImage(XFile image) async {
     setState(() {
       imageFileList!.add(image);
     });
   }
 
-  /// Removes an image from the `imageFileList`.
+  /// Remove uma imagem da lista `imageFileList`.
   ///
-  /// The `context` parameter is the `BuildContext` object representing the current state of the widget tree.
-  /// The `image` parameter is the `XFile` object representing the image to be removed.
+  /// O parâmetro `context` é o objeto `BuildContext` que representa o estado atual da árvore de widgets.
+  /// O parâmetro `image` é o objeto `XFile` que representa a imagem a ser removida.
   ///
-  /// This function displays a confirmation dialog to the user asking if they want to remove the image.
-  /// If the user confirms, the image is removed from the `imageFileList` and the state is updated.
+  /// Esta função exibe uma caixa de diálogo de confirmação para o usuário perguntando se ele deseja remover a imagem.
+  /// Se o usuário confirmar, a imagem é removida da `imageFileList` e o estado é atualizado.
   ///
-  /// Returns a `Future<void>` indicating the completion of the operation.
+  /// Retorna um `Future<void>` indicando a conclusão da operação.
   Future<void> removeImage(BuildContext context, XFile image) async {
     //enableCamButton();
     await showConfirmationDialog(context,
@@ -70,7 +70,7 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
     });
   }
 
-  /// Saves the images in the `imageFileList` to the device.
+  /// Salva as imagens na `imageFileList` no dispositivo.
   saveImages() {
     if (imageFileList != null) {
       print('imageFileList: ${imageFileList!.length}');
