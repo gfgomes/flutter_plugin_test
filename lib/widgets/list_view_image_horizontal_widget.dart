@@ -3,14 +3,46 @@ import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ListViewImageWidget extends StatefulWidget {
+/// Widget de lista horizontal de imagens que permite adicionar e remover imagens.
+///
+/// A classe [ListViewHorizontalImageWidget] é responsável por exibir uma lista de imagens
+/// e permitir a adição e remoção de imagens. Ela utiliza um [ListView.builder]
+/// para renderizar as imagens e um [ ElevatedButton.icon] para adicionar novas
+/// imagens.
+///
+/// A lista de imagens é armazenada em uma lista de [XFile] chamada [imageFileList].
+/// Ao adicionar uma nova imagem, ela é adicionada à lista. Ao remover uma
+/// imagem, ela é removida da lista.
+///
+/// A classe também possui um método chamado [picker.pickImage] do componente image picker que é responsável
+/// por abrir o seletor de imagens do dispositivo e retornar a imagem selecionada
+/// como um [XFile].
+///
+/// A classe utiliza o pacote [image_picker] para abrir o seletor de imagens.
+///
+/// Parâmetros:
+///   - [imageFileList]: Lista de imagens[List<XFile>?] a serem exibidas e manipuladas.
+///   - [maxImages]: Número máximo de imagens [int] permitidas na lista.
+///   - [fnAddImage]: Função assíncrona para adicionar uma imagem à lista.
+///   - [fnRemoveImage]: Função assíncrona para remover uma imagem da lista.
+///
+/// Comunicação com widget pai:
+/// A comunicação da lista de imagens do widiget pair com a lista interna é feita pelas funções [fnAddImage] e [fnRemoveImage] que devem passadas
+/// como parametros no construtor, elas também devem chamar setstate para renderizar as auterações do widget.
+///
+/// Dependências:
+///   - [image_picker]: Para abrir o seletor de imagens.
+///  - [full_screen_image]: Para mostrar a imagem em tela cheia ao ser clicada.
+///  - [cross_file_image]: Para converter um [XFile] em uma imagem.
+///
+class ListViewHorizontalImageWidget extends StatefulWidget {
   final int maxImages;
 
   final List<XFile>? imageFileList;
   final Future<void> Function(XFile xFile) fnAddImage;
   final Future<void> Function(BuildContext context, XFile xFile) fnRemoveImage;
 
-  const ListViewImageWidget({
+  const ListViewHorizontalImageWidget({
     super.key,
     required this.imageFileList,
     required this.maxImages,
@@ -19,10 +51,12 @@ class ListViewImageWidget extends StatefulWidget {
   });
 
   @override
-  State<ListViewImageWidget> createState() => _ListViewImageWidgetState();
+  State<ListViewHorizontalImageWidget> createState() =>
+      _ListViewHorizontalImageWidgetState();
 }
 
-class _ListViewImageWidgetState extends State<ListViewImageWidget> {
+class _ListViewHorizontalImageWidgetState
+    extends State<ListViewHorizontalImageWidget> {
   final ImagePicker picker = ImagePicker();
   bool enableCamera = true;
 
