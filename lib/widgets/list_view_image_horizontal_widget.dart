@@ -31,9 +31,9 @@ import 'package:image_picker/image_picker.dart';
 /// como parametros no construtor, elas também devem chamar setstate para renderizar as auterações do widget.
 ///
 /// Dependências:
-///   - [image_picker]: Para abrir o seletor de imagens.
-///  - [full_screen_image]: Para mostrar a imagem em tela cheia ao ser clicada.
-///  - [cross_file_image]: Para converter um [XFile] em uma imagem.
+///   - [image_picker]: Para abrir o seletor de imagens [flutter pub add image_picker].
+///  - [full_screen_image]: Para mostrar a imagem em tela cheia ao ser clicada[flutter pub add full_screen_image].
+///  - [cross_file_image]: Para converter um [XFile] em uma imagem[flutter pub add cross_file_image].
 ///
 class ListViewHorizontalImageWidget extends StatefulWidget {
   final int maxImages;
