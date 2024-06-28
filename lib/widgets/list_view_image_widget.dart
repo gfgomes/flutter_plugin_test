@@ -27,7 +27,7 @@ class ListViewImageWidget extends StatelessWidget {
     return Column(
       children: [
         ElevatedButton.icon(
-          onPressed: enableCamera ? () => fnAddImage() : null,
+          onPressed: enableCamera ? () => addImage() : null,
           icon: const Icon(Icons.add_a_photo),
           label: const Text('Adicionar imagem'),
         ),
@@ -73,8 +73,7 @@ class ListViewImageWidget extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              fnRemoveImage(imageFileList![index]);
-                              fnEnableCamButton();
+                              removeImage(imageFileList![index]);
                             },
                             icon: const Icon(Icons.delete,
                                 color: Colors.red, size: 38),
@@ -88,5 +87,13 @@ class ListViewImageWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  addImage() async {
+    await fnAddImage();
+  }
+
+  void removeImage(XFile image) {
+    fnRemoveImage(image);
   }
 }

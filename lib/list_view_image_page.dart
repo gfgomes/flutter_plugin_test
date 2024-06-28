@@ -20,7 +20,7 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
 
   bool enableCamera = true;
 
-  int maxImages = 5;
+  int maxImages = 2;
 
   bool get isCamEnable {
     if (imageFileList != null && imageFileList!.length < maxImages) return true;
