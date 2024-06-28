@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_test/my_image_gallery.dart';
+import 'package:flutter_plugin_test/list_view_image_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ImageGalleryWidget(),
+      home: ListViewImageWidgetPage(),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
