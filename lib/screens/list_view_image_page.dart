@@ -1,7 +1,6 @@
-import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_plugin_test/widgets/core_dialogs_widgets.dart';
 import 'package:flutter_plugin_test/widgets/list_view_image_widget.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ListViewImageWidgetPage extends StatefulWidget {
@@ -18,14 +17,9 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
   //File _image;
   ImagePicker picker = ImagePicker();
 
-  bool enableCamera = true;
+  //bool enableCamera = true;
 
-  int maxImages = 2;
-
-  bool get isCamEnable {
-    if (imageFileList != null && imageFileList!.length < maxImages) return true;
-    return false;
-  }
+  int maxImages = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +28,12 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
         title: Text('My App'),
       ),
       body: ListViewImageWidget(
-          imageFileList: imageFileList,
-          maxImages: maxImages,
-          enableCamera: enableCamera,
-          fnAddImage: addImage,
-          fnRemoveImage: removeImage,
-          fnEnableCamButton: enableCamButton),
+        imageFileList: imageFileList,
+        maxImages: maxImages,
+        fnAddImage: addImage,
+        fnRemoveImage: removeImage,
+      ),
     );
-  }
-
-  enableCamButton() {
-    if (isCamEnable) {
-      enableCamera = true;
-    } else {
-      enableCamera = false;
-    }
   }
 
   Future<void> addImage() async {
@@ -61,16 +46,24 @@ class _ListViewImageWidgetPageState extends State<ListViewImageWidgetPage> {
       );
 
       if (image != null) {
-        imageFileList!.add(image);
-        enableCamButton();
-        setState(() {});
+        //enableCamButton();
+        setState(() {
+          imageFileList!.add(image);
+        });
       }
     }
   }
 
-  void removeImage(XFile xFile) {
-    imageFileList!.remove(xFile);
-    enableCamButton();
-    setState(() {});
+  Future<void> removeImage(BuildContext context, XFile xFile) async {
+    //enableCamButton();
+    await showConfirmationDialog(context,
+            content: "Deseja remover esta imagem?")
+        .then((optionSelected) {
+      if (optionSelected) {
+        setState(() {
+          imageFileList!.remove(xFile);
+        });
+      }
+    });
   }
 }

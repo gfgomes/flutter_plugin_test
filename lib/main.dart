@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_test/list_view_image_page.dart';
+import 'package:flutter_plugin_test/screens/list_view_image_page.dart';
 
 void main() {
   runApp(const MyApp());
