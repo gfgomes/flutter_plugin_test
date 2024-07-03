@@ -62,6 +62,7 @@ class _ListViewHorizontalImageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    checkIfCamButtonIsEnabled();
     return Column(
       children: [
         ElevatedButton.icon(
